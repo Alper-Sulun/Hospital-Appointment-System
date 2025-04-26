@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevuları Görüntüle</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #555;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .appointments-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .appointment-item {
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 15px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .appointment-item:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .appointment-item p {
+            margin: 8px 0;
+        }
+
+        .appointment-item span {
+            font-weight: bold;
+        }
+
+        .canceled {
+            background-color: #f8d7da; /* Light red for canceled */
+            border: 1px solid #f5c6cb;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            text-align: center;
+            color: #4CAF50;
+            font-size: 18px;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 6px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .no-appointments {
+            text-align: center;
+            color: #888;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Randevuları Görüntüle</h1>
+
+    <div class="appointments-list">
+        <h2>Gelecek Randevular</h2>
+        {% if upcoming_appointments %}
+            {% for appointment in upcoming_appointments %}
+                <div class="appointment-item {% if appointment[5] == 'İptal Edildi' %}canceled{% endif %}">
+                    <p><span>Doctor:</span> {{ appointment[1] }} {{ appointment[2] }}</p> <!-- Doctor's name and surname -->
+                    <p><span>Date:</span> {{ appointment[3] }}</p> <!-- Date of the appointment -->
+                    <p><span>Time:</span> {{ appointment[4] }}</p> <!-- Time of the appointment -->
+                    {% if appointment[5] == 'İptal Edildi' %}
+                        <p><span>Status:</span> İptal Edildi</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-appointments">Gelecek Randevu Bulunamadı.</p>
+        {% endif %}
+    </div>
+
+    <div class="appointments-list">
+        <h2>Geçmiş Randevular</h2>
+        {% if past_appointments %}
+            {% for appointment in past_appointments %}
+                <div class="appointment-item {% if appointment[5] == 'İptal Edildi' %}canceled{% endif %}">
+                    <p><span>Doctor:</span> {{ appointment[1] }} {{ appointment[2] }}</p> <!-- Doctor's name and surname -->
+                    <p><span>Date:</span> {{ appointment[3] }}</p> <!-- Date of the appointment -->
+                    <p><span>Time:</span> {{ appointment[4] }}</p> <!-- Time of the appointment -->
+                    {% if appointment[5] == 'İptal Edildi' %}
+                        <p><span>Status:</span> İptal Edildi</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-appointments">Geçmiş Randevu Bulunamadı.</p>
+        {% endif %}
+    </div>
+
+    <a href="/patientMenu">Hasta Menüsüne Dön</a>
+</body>
+
+
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            color: #333;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #666;
+            display: block;
+            margin: 10px 0 5px;
+            text-align: left;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+    <script>
+        // Şifre eşleşme doğrulaması
+        function validateForm() {
+            const password = document.getElementById("password").value;
+            const password2 = document.getElementById("password2").value;
+            if (password !== password2) {
+                alert("Şifreler eşleşmiyor!");
+                return false; // Form gönderimini engelle
+            }
+            return true; // Form gönderimine izin ver
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Kayıt Ol</h2>
+        <form action="/register" method="POST" onsubmit="return validateForm()">
+            <label for="name">Ad:</label>
+            <input type="text" id="name" name="name" placeholder="Adınızı girin" required>
+
+            <label for="surname">Soyad:</label>
+            <input type="text" id="surname" name="surname" placeholder="Soyadınızı girin" required>
+
+            <label for="email">E-posta:</label>
+            <input type="email" id="email" name="email" placeholder="E-posta adresinizi girin" required>
+
+            <label for="password">Şifre:</label>
+            <input type="password" id="password" name="password" placeholder="Şifrenizi girin" required>
+
+            <label for="password2">Şifre Tekrar:</label>
+            <input type="password" id="password2" name="password2" placeholder="Şifrenizi tekrar girin" required>
+
+            <input type="submit" value="Kayıt Ol">
+        </form>
+        <a href="{{ url_for('home') }}">Anasayfaya Dön</a>
+    </div>
+</body>
+</html>

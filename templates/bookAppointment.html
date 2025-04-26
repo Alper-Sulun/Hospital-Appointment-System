@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevu Al</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        form {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Randevu Al</h1>
+    <form action="/bookAppointment" method="POST">
+        <!-- Bölüm seçimi -->
+        <label for="department">Bölüm Seçin:</label>
+        <select id="department" name="department" onchange="filterDoctors()">
+            <option value="">Bölüm Seçin</option>
+            {% for department in departments %}
+            <option value="{{ department }}">{{ department }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Doktor seçimi -->
+        <label for="doctor">Doktor Seçin:</label>
+        <select id="doctor" name="doctor" required>
+            <option value="">Doktor Seçin</option>
+            {% for doctor in doctors %}
+            <option value="{{ doctor[0] }}" data-department="{{ doctor[3] }}">
+                {{ doctor[1] }} {{ doctor[2] }} - {{ doctor[3] }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <!-- Tarih ve saat seçimi -->
+        <label for="date">Tarih Seçin:</label>
+        <input type="date" id="date" name="date" required min="{{ today_date }}">
+        
+        <label for="time">Saat Seçin:</label>
+        <input type="time" id="time" name="time" required min="{{ current_time }}">
+
+        <!-- Gönder butonu -->
+        <button type="submit">Randevu Al</button>
+    </form>
+
+    <a href="/patientMenu">Hasta Menüsüne Dön</a>
+
+    
+    
+
+    <script>
+        function filterDoctors() {
+            const department = document.getElementById("department").value;
+            const doctorSelect = document.getElementById("doctor");
+            const doctors = doctorSelect.querySelectorAll("option");
+
+            // Tüm doktorları filtrele
+            doctors.forEach(doctor => {
+                const doctorDepartment = doctor.getAttribute("data-department");
+
+                if (!department || doctorDepartment === department) {
+                    doctor.style.display = "block";
+                } else {
+                    doctor.style.display = "none";
+                }
+            });
+
+            // İlk uygun seçeneği seçili hale getir
+            const visibleDoctor = Array.from(doctors).find(
+                doctor => doctor.style.display === "block" && doctor.value
+            );
+
+            doctorSelect.value = visibleDoctor ? visibleDoctor.value : "";
+        }
+    </script>
+</body>
+
+
+</html>

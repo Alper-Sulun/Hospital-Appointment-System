@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilim</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .profile-info {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-info p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .update-form {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .update-form label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .update-form input,
+        .update-form select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .update-form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .update-form button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Profilim</h1>
+
+    <!-- Doktorun mevcut bilgilerini göster -->
+    <div class="profile-info">
+        <h2>Mevcut Bilgiler</h2>
+        <p><strong>Ad:</strong> {{ doctor.name }}</p>
+        <p><strong>Soyad:</strong> {{ doctor.surname }}</p>
+        <p><strong>Uzmanlık Alanı:</strong> {{ doctor.department}}</p>  
+        <p><strong>Çalışma Saatleri:</strong> {{ doctor.workHours }}</p>
+        <p><strong>İletişim Bilgileri:</strong> {{ doctor.contact_info }}</p>
+    </div>
+
+    <!-- Form ile bilgileri güncelle -->
+    <div class="update-form">
+        <h2>Bilgileri Güncelle</h2>
+        <form action="/updateDoctorProfile" method="POST">
+            <!-- Departman select -->
+            <label for="department">Uzmanlık Alanı:</label>
+            <select id="department" name="department" required>
+                {% for dept in departments %}
+                    <option value="{{ dept[1] }}" {% if dept[1] == doctor.department %}selected{% endif %}>{{ dept[1] }}</option>
+                {% endfor %}
+            </select><br>
+
+            <label for="workHours">Çalışma Saatleri:</label>
+            <input type="text" id="workHours" name="workHours" value="{{ doctor.workHours }}" required><br>
+
+            <label for="contact_info">İletişim Bilgileri:</label>
+            <input type="text" id="contact_info" name="contact_info" value="{{ doctor.contact_info }}" required><br>
+
+            <button type="submit">Güncelle</button>
+        </form>
+    </div>
+
+    <a href="/doctorMenu">Ana Menüye Dön</a>
+</body>
+
+</html>

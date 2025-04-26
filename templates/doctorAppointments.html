@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevularım</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1, h2 {
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        ul {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 10px;
+            list-style-type: none;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        ul li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        ul li:last-child {
+            border-bottom: none;
+        }
+
+        p {
+            text-align: center;
+            font-style: italic;
+            color: #777;
+        }
+
+        a {
+            display: inline-block;
+            text-align: center;
+            margin-top: 20px;
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .appointment-info {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .appointment-info span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Randevularım</h1>
+
+
+    <h2>Bugünkü Randevular</h2>
+    {% if todays_appointments %}
+        <ul>
+        {% for appointment in todays_appointments %}
+            <li class="appointment-info">Hasta: <span>{{ appointment[0] }} {{ appointment[1] }}</span> | Saat: <span>{{ appointment[2] }}</span> | Durum: <span>{{ appointment[3] }}</span></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Bugün randevunuz yok.</p>
+    {% endif %}
+
+
+    <h2>Gelecek Randevular</h2>
+    {% if upcoming_appointments %}
+        <ul>
+        {% for appointment in upcoming_appointments %}
+            <li class="appointment-info">Hasta: <span>{{ appointment[0] }} {{ appointment[1] }}</span> | Tarih: <span>{{ appointment[2] }}</span> | Saat: <span>{{ appointment[3] }}</span> | Durum: <span>{{ appointment[4] }}</span></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Gelecek randevularınız bulunmamaktadır.</p>
+    {% endif %}
+
+
+    <h2>Geçmiş Randevular</h2>
+    {% if past_appointments %}
+        <ul>
+        {% for appointment in past_appointments %}
+            <li class="appointment-info">Hasta: <span>{{ appointment[0] }} {{ appointment[1] }}</span> | Tarih: <span>{{ appointment[2] }}</span> | Saat: <span>{{ appointment[3] }}</span> | Durum: <span>{{ appointment[4] }}</span></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Geçmiş randevularınız bulunmamaktadır.</p>
+    {% endif %}
+
+    <a href="/doctorMenu">Ana Menüye Dön</a>
+
+</body>
+</html>

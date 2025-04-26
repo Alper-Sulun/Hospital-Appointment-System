@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doktorlar</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #45a049;
+        }
+
+        button {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e53935;
+        }
+
+        .add-doctor-button {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .return-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .return-link a {
+            color: #4CAF50;
+        }
+
+        .return-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Doktorlar</h1>
+
+
+    <div class="add-doctor-button">
+        <h2><a href="{{ url_for('add_doctor') }}"><button>Yeni Doktor Ekle</button></a></h2>
+    </div>
+
+    
+    <table>
+        <tr>
+            <th>İsim</th>
+            <th>Soyisim</th>
+            <th>Email</th>
+            <th>Bölüm</th>
+            <th>Çalışma Saatleri</th>
+            <th>İletişim Bilgileri</th>
+            <th>Aksiyonlar</th>
+        </tr>
+        {% for doctor in doctors %}
+        <tr>
+            <td>{{ doctor[1] }}</td> <!-- Name -->
+            <td>{{ doctor[2] }}</td> <!-- Surname -->
+            <td>{{ doctor[3] }}</td> <!-- Email -->
+            <td>{{ doctor[4] }}</td> <!-- Department -->
+            <td>{{ doctor[5] }}</td> <!-- WorkHours -->
+            <td>{{ doctor[6] }}</td> <!-- Contact Info -->
+            <td>
+                <a href="{{ url_for('edit_doctor', doctor_id=doctor[0]) }}">Düzenle</a>
+                <form method="POST" action="{{ url_for('delete_doctor', doctor_id=doctor[0]) }}" style="display:inline;">
+                    <button type="submit">Sil</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="return-link">
+        <a href="{{ url_for('admin_menu') }}">Admin Menüsüne Dön</a>
+    </div>
+
+</body>
+</html>

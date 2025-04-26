@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Doktor Ekle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            color: #333;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #666;
+            display: block;
+            margin: 10px 0 5px;
+            text-align: left;
+        }
+
+        input[type="text"], input[type="email"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Yeni Doktor Ekle</h1>
+        <form method="POST">
+            <label for="name">İsim:</label>
+            <input type="text" name="name" id="name" placeholder="İsmi girin" required>
+
+            <label for="surname">Soyisim:</label>
+            <input type="text" name="surname" id="surname" placeholder="Soyismi girin" required>
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" placeholder="Email adresini girin" required>
+
+            <label for="workHours">Çalışma Saatleri:</label>
+            <input type="text" name="workHours" id="workHours" placeholder="Örn: 09:00-17:00" required>
+
+            <label for="department">Bölüm:</label>
+            <select name="department" id="department" required>
+                {% for dept in departments %}
+                    <option value="{{ dept[1] }}">{{ dept[1] }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="contact_info">İletişim Bilgisi:</label>
+            <input type="text" name="contact_info" id="contact_info" placeholder="Telefon veya diğer iletişim bilgisi" required>
+
+            <button type="submit">Doktor Ekle</button>
+        </form>
+        <a href="{{ url_for('doctors') }}">Doktor listesine dön</a>
+    </div>
+</body>
+</html>

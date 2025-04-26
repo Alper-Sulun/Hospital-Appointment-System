@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevu Düzenle</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h2 {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        input[type="date"], input[type="time"] {
+            background-color: #f9f9f9;
+        }
+
+        select {
+            background-color: #f9f9f9;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .form-container {
+            margin-top: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Randevu Düzenle</h2>
+
+    <div class="form-container">
+        <form method="POST">
+            <div class="form-group">
+                <label for="date">Tarih:</label>
+                <input type="date" name="date" value="{{ appointment[3] }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="time">Zaman:</label>
+                <input type="time" name="time" value="{{ appointment[4] }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Durum:</label>
+                <select name="status">
+                    <option value="Sırada" {% if appointment[5] == 'Pending' %}selected{% endif %}>Sırada</option>
+                    <option value="Onaylandı" {% if appointment[5] == 'Verified' %}selected{% endif %}>Onaylandı</option>
+                    <option value="Tamamlandı" {% if appointment[5] == 'Completed' %}selected{% endif %}>Tamamlandı</option>
+                    <option value="İptal Edildi" {% if appointment[5] == 'Canceled' %}selected{% endif %}>İptal Edildi</option>
+                </select>
+            </div>
+
+            <button type="submit">Randevuyu Güncelle</button>
+        </form>
+    </div>
+
+    <a href="{{ url_for('appointments') }}">Randevulara Dön</a>
+
+</body>
+</html>

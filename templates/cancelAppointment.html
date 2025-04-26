@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevu İptal</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #f44336;
+            margin-bottom: 20px;
+        }
+
+        form {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #f44336;
+            box-shadow: 0 0 5px rgba(244, 67, 54, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #d32f2f;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 40px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Randevu İptal</h1>
+    
+    {% if upcoming_appointments %}
+        <form action="/cancelAppointment" method="POST">
+            <label for="appointment">İptal etmek için randevu seçiniz:</label>
+            <select name="appointmentID" id="appointment" required>
+                {% for appointment in upcoming_appointments %}
+                    <option value="{{ appointment[0] }}">
+                        Doktor: {{ appointment[1] }} {{ appointment[2] }} - Tarih: {{ appointment[3] }} - Saat: {{ appointment[4] }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Randevuyu İptal Et</button>
+        </form>
+    {% else %}
+        <p>Gelecek Randevu Bulunamadı.</p>
+    {% endif %}
+    
+    <a href="{{ url_for('patient_menu') }}">Hasta Menüsüne Dön</a>
+</body>
+</html>
